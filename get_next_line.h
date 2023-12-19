@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jewu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:03:08 by jewu              #+#    #+#             */
-/*   Updated: 2023/12/14 19:04:45 by jewu             ###   ########.fr       */
+/*   Updated: 2023/12/19 19:41:09 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndefine GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# ifndef BUFFER_SIZE
+# define BUFFER_SIZE 1
 
 # include <stdlib.h>
 # include <unistd.h>
 
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
-void    *ft_calloc(size_t n_memb, size_t size);
-
+void	*ft_calloc(size_t n_memb, size_t size);
 
 #endif
 /*

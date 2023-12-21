@@ -6,15 +6,17 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:03:08 by jewu              #+#    #+#             */
-/*   Updated: 2023/12/19 19:41:09 by jewu             ###   ########.fr       */
+/*   Updated: 2023/12/21 19:01:03 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
+
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1
+#  define BUFFER_SIZE 1
+# endif
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -22,6 +24,8 @@
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
 void	*ft_calloc(size_t n_memb, size_t size);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(const char *s);
 
 #endif
 /*

@@ -5,66 +5,96 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/20 15:03:54 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/01 21:00:10 by jewu             ###   ########.fr       */
+/*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
+/*   Updated: 2024/01/05 20:13:15 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void	*fetch_lines(int fd, char *buf, char *stash)
+static	char	*clean_stash(char *stash)
 {
-	int i;
-	char *new_text;
+	char	*new;
 
-	if (!stash)
-		stash = ft_strdup("");
-	stash = ft_strjoin(buf, stash);
+	return (new);
 }
 
-/*Adds the buffer content to a stash*/
-
-static void read_line(int fd, char *buf, char *stash)
+static char	*fetch_line(char *stash, char *line)
 {
-	int bytes_read;
-	char *buffer;
+	int (i) = 0;
 
-	while(!new_line(text))
+	line = malloc(sizeof(char) * 1);
+	while (stash[i] != '\0' && stash[i] != '\n')
 	{
-		buffer = ft_calloc(sizeof(char) * BUFFER_SIZE + 1);
-		if (!buffer)
-			return (NULL);
+		line[i] = stash[i];
+		i++;
+	}
+	return (line);
+}
+
+static char	*read_and_join(int fd, char *buffer, char *stash)
+{
+	int (bytes_read) = 1;
+	while (!ft_strchr(buffer, '\n') && bytes_read != 0)
+	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (!bytes_read)
+		if (bytes_read == -1)
 		{
 			free(buffer);
 			return (NULL);
 		}
 		buffer[bytes_read] = '\0';
-		fetch_lines(text, buffer);
+		if (!stash)
+			stash = ft_strdup("");
+		stash = ft_strjoin(buffer, stash);
+		free(buffer);
 	}
 	free(buffer);
+	return (stash);
 }
 
-/* Uses read() to read the current line of n bytes */
+/*Reads n bytes and buffer is joined with stash
+ * */
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *stash;
-	char	*buf;
-	char	*line;
+	static char	*stash;
+	char		*buffer;
+	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, &line, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	line = read_lines(fd, buf, stash);
-	if (!line)
-		return (NULL);
-	//1. read from fd and add into stock
-	//2. extract from stock to line
-	//3. clean up stock
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (0);
+	stash = read_and_join(fd, buffer, stash);
+	line = fetch_line(stash, line);
 	return (line);
 }
+
 /* Uses read() to add characters to the stash 
  * ssize_t read(int fildes, void *buf, size_t nbyte)
  * read() attempts to read nbyte bytes of data from the object referenced by the descriptor
  * fildes into the buffer pointed to by buf*/
+
+#include <fcntl.h>
+#include <stdio.h>
+
+int	main(void)
+{
+	int	fd;
+	char	*line;
+	fd = open("gnlpersona3.txt", O_RDONLY);
+	if (!fd)
+		return (-1);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break;
+		printf("%s\n", line);
+		free(line);
+	}
+	close(fd);
+	return (0);
+}

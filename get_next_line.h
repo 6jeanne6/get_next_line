@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:03:08 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/05 15:34:16 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/06 14:26:54 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+int		ft_strlen(char *s);
+int		ft_strchr(char *s, char c);
 char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strdup(const char *s);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strdup(char *s);
 
 #endif
 /*

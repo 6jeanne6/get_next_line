@@ -6,41 +6,41 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:54:09 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/05 17:06:54 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/06 14:26:50 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_strlen(char *s)
 {
-	size_t (i) = 0;
+	int (i) = 0;
 
 	while (s[i] != '\0')
 		i++;
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strchr(char *s, char c)
 {
-	int (j) = 0;
-	while (s[j] != '\0')
+	int (i) = 0;
+	while (s[i] != '\0')
 	{
-		if (s[j] == (unsigned char)c)
-			return ((char *) &s[j]);
-		j++;
+		if (s[i] == c)
+			return (1);
+		i++;
 	}
-	if (s[j] == (unsigned char)c)
-		return ((char *) &s[j]);
+	if (s[i] == c)
+		return (1);
 	return (0);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*ptr;
 
-	size_t (i) = 0;
-	size_t (j) = 0;
+	int (i) = 0;
+	int (j) = 0;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
@@ -53,15 +53,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	while (s2[j] != '\0')
-	{
-		ptr[i + j] = s2[j];
-		j++;
-	}
-	ptr[i + j] = '\0';
+		ptr[i++] = s2[j++];
+	ptr[i] = '\0';
+	free(s1);
 	return (ptr);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	int (j) = 0;
 	char *(result) = NULL;

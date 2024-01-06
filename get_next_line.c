@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/05 20:13:15 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/06 17:38:53 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,40 @@ static	char	*clean_stash(char *stash)
 {
 	char	*new;
 
+	int (i) = 0;
+	int (j) = 0;
+	while (stash[i] != '\n' && stash[i] != '\0')
+		i++;
+	if (stash[i] == '\n')
+		i++;
+	new = (char *)malloc(sizeof(char) * (ft_strlen(stash) - i + 1));
+	if (!new)
+		return (NULL);
+	while (stash[i] != '\0')
+		new[j++] = stash[i++];
+	free(stash);
+	new[j] = '\0';
 	return (new);
 }
 
 static char	*fetch_line(char *stash, char *line)
 {
 	int (i) = 0;
+	int (j) = 0;
 
-	line = malloc(sizeof(char) * 1);
 	while (stash[i] != '\0' && stash[i] != '\n')
-	{
-		line[i] = stash[i];
 		i++;
+	if (stash[i] == '\n')
+		i++;
+	line = (char *)malloc(sizeof(char) * i + 1);
+	if (!line)
+		return (NULL);
+	while (stash[j] != '\0' && stash[j] != '\n')
+	{
+		line[j] = stash[j];
+		j++;
 	}
+	line[j] = '\0';
 	return (line);
 }
 
@@ -38,7 +59,7 @@ static char	*read_and_join(int fd, char *buffer, char *stash)
 	while (!ft_strchr(buffer, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)
+		if (bytes_read < 0)
 		{
 			free(buffer);
 			return (NULL);
@@ -47,7 +68,6 @@ static char	*read_and_join(int fd, char *buffer, char *stash)
 		if (!stash)
 			stash = ft_strdup("");
 		stash = ft_strjoin(buffer, stash);
-		free(buffer);
 	}
 	free(buffer);
 	return (stash);
@@ -64,11 +84,14 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
+	line = NULL;
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (0);
+	line = ft_strjoin(line, buffer);
 	stash = read_and_join(fd, buffer, stash);
 	line = fetch_line(stash, line);
+	stash = clean_stash(stash);
 	return (line);
 }
 
@@ -82,16 +105,13 @@ char	*get_next_line(int fd)
 
 int	main(void)
 {
-	int	fd;
+	int		fd;
 	char	*line;
-	fd = open("gnlpersona3.txt", O_RDONLY);
+	fd = open("../Main/gnlpersona3.txt", O_RDONLY);
 	if (!fd)
 		return (-1);
-	while (1)
+	while ((line = get_next_line(fd)))
 	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break;
 		printf("%s\n", line);
 		free(line);
 	}

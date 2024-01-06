@@ -6,7 +6,7 @@
 /*   By: jewu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:38:07 by jewu              #+#    #+#             */
-/*   Updated: 2023/12/14 14:21:29 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/06 16:55:28 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	main(void)
 	while (1)
 	{
 		line = get_next_line(fd);
-		if (line == NULL)
+		if (!line)
 			break;
 		printf("%s\n", line);
-		free(line;)
+		free(line);
 	}
 	return (0);
 }

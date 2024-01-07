@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/06 17:38:53 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/07 16:12:13 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ static	char	*clean_stash(char *stash)
 	new[j] = '\0';
 	return (new);
 }
+/*Cleans the previous line to only keep the next
+*line after \n
+*/
 
 static char	*fetch_line(char *stash, char *line)
 {
@@ -53,6 +56,10 @@ static char	*fetch_line(char *stash, char *line)
 	return (line);
 }
 
+/* In the case stash has saved a bit of the next line,
+* we fetch the previous line until the \n
+*/
+
 static char	*read_and_join(int fd, char *buffer, char *stash)
 {
 	int (bytes_read) = 1;
@@ -73,8 +80,11 @@ static char	*read_and_join(int fd, char *buffer, char *stash)
 	return (stash);
 }
 
-/*Reads n bytes and buffer is joined with stash
- * */
+/* Reads BUFFER_SIZE bytes, puts BUFFER_SIZE characters to buffer,
+* and buffer is joined with stash in the while
+* ssize_t read(int fildes, void *buf, size_t nbyte)
+* read() attempts to read nbyte bytes of data from the object referenced by the descriptor
+* */
 
 char	*get_next_line(int fd)
 {
@@ -95,10 +105,8 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/* Uses read() to add characters to the stash 
- * ssize_t read(int fildes, void *buf, size_t nbyte)
- * read() attempts to read nbyte bytes of data from the object referenced by the descriptor
- * fildes into the buffer pointed to by buf*/
+/* Writes BUFFER_SIZE characters of a file text in the terminal
+*/
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -118,3 +126,7 @@ int	main(void)
 	close(fd);
 	return (0);
 }
+/*Testing get_next_line function
+* This test has to write BUFFER_SIZE characters, 
+* until the end of the file
+*/

@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:54:09 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/08 16:49:56 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/09 14:48:28 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[j] != '\0')
 		ptr[i++] = s2[j++];
 	ptr[i] = '\0';
+	//free(s1);
 	return (ptr);
 }
 
@@ -74,3 +75,5 @@ char	*ft_strdup(char *s)
 	result[j] = '\0';
 	return (result);
 }
+
+

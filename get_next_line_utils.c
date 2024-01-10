@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:54:09 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/09 14:48:28 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/10 18:59:59 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	ft_strlen(char *s)
 int	ft_strchr(char *s, char c)
 {
 	int (i) = 0;
+	if (!s || !c)
+		return (0);
 	while (s[i] != '\0')
 	{
 		if (s[i] == c)
 			return (1);
 		i++;
 	}
-	if (s[i] == c)
-		return (1);
 	return (0);
 }
 
@@ -76,4 +76,23 @@ char	*ft_strdup(char *s)
 	return (result);
 }
 
+void	*ft_calloc(int nmemb, int size)
+{
+	char	*ptr;
+	int		i;
 
+	i = 0;
+	if (nmemb == 0 || size == 0)
+		return (malloc(0));
+	if (nmemb > 2147483647 / size)
+		return (0);
+	ptr = malloc(nmemb * size);
+	if (!ptr)
+		return (0);
+	while (i < nmemb * size)
+	{
+		ptr[i] = '\0';
+		i++;
+	}
+	return (ptr);
+}

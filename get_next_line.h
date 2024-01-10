@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:03:08 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/09 13:17:11 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/10 19:00:34 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		ft_strchr(char *s, char c);
 char	*get_next_line(int fd);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(char *s);
+void	*ft_calloc(int nmemb, int size);
 
 #endif
 /*

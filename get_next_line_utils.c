@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:54:09 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/10 18:59:59 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/11 15:36:57 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	ft_strlen(char *s)
 {
 	int (i) = 0;
-
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 		i++;
 	return (i);
@@ -55,7 +56,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[j] != '\0')
 		ptr[i++] = s2[j++];
 	ptr[i] = '\0';
-	//free(s1);
+	free(s1);
 	return (ptr);
 }
 

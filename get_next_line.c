@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/10 20:02:24 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/11 16:25:46 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,26 @@ static char	*clean_stash(char *stash)
 {
 	char	*new_stash;
 
+	int (i) = 0;
+	int (j) = 0;
+	if (!stash)
+		return (NULL);
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	i++;
+	new_stash = malloc((sizeof(char)) * (ft_strlen(stash) - i + 1));
+	if (!new_stash)
+		return (free(stash), NULL);
+	while (stash[i] != '\0')
+		new_stash[j++] = stash[i++];
+	new_stash[j] = '\0';
+	//printf("%s\n", new_stash);
+	free(stash);
 	return (new_stash);
 }
+/* Cleans the previous line to only keep
+* the nest line after \n
+*/
 
 static char	*fetch_line(char *stash)
 {
@@ -68,8 +86,11 @@ static char	*read_and_join(int fd, char *buffer, char *stash)
 			return (free(buffer), free(stash), NULL);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(stash, buffer);
-		free(stash);
+		if (!temp)
+			return (free(buffer), free(stash), NULL);
+		//free(stash);
 		stash = temp;
+		//free(temp);
 	}
 	return (stash);
 }
@@ -92,15 +113,15 @@ char	*get_next_line(int fd)
 		return (NULL);
 	stash = read_and_join(fd, buf, stash);
 	free(buf);
-	if (!stash || stash[0] == '\0')
+	if (!stash)
 	{
-		// free(stash);
+		//free(stash);
 		// stash = NULL;
 		return (NULL);
 	}
 	line = fetch_line(stash);
 	stash = clean_stash(stash);
-	free(stash);
+	//free(stash);
 	return (line);
 }
 
@@ -117,7 +138,7 @@ int	main(void)
 	if (!fd)
 		return (-1);
 	int (i) = 0;
-	while (i < 1)
+	while (i < 3)
 	{
 		line = get_next_line(fd);
 		if (!line)

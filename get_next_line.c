@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/11 16:25:46 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/11 17:53:01 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ static char	*clean_stash(char *stash)
 
 	int (i) = 0;
 	int (j) = 0;
-	if (!stash)
+	if (!stash || stash[0] == '\0')
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
 	i++;
 	new_stash = malloc((sizeof(char)) * (ft_strlen(stash) - i + 1));
 	if (!new_stash)
-		return (free(stash), NULL);
+		// return (free(stash), NULL);
+		return (NULL);
 	while (stash[i] != '\0')
 		new_stash[j++] = stash[i++];
 	new_stash[j] = '\0';
-	//printf("%s\n", new_stash);
 	free(stash);
 	return (new_stash);
 }
@@ -45,7 +45,7 @@ static char	*fetch_line(char *stash)
 
 	int (i) = 0;
 	int (j) = 0;
-	if (!stash)
+	if (stash[0] == '\0')
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
@@ -86,10 +86,14 @@ static char	*read_and_join(int fd, char *buffer, char *stash)
 			return (free(buffer), free(stash), NULL);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(stash, buffer);
-		if (!temp)
-			return (free(buffer), free(stash), NULL);
+		if (!temp || temp[0] == '\0')
+		{
+			return (free(temp), NULL);
+		}
 		//free(stash);
 		stash = temp;
+		if (!stash || stash[0] == '\0')
+			return (NULL);
 		//free(temp);
 	}
 	return (stash);
@@ -116,7 +120,7 @@ char	*get_next_line(int fd)
 	if (!stash)
 	{
 		//free(stash);
-		// stash = NULL;
+		//stash = NULL;
 		return (NULL);
 	}
 	line = fetch_line(stash);
@@ -138,7 +142,7 @@ int	main(void)
 	if (!fd)
 		return (-1);
 	int (i) = 0;
-	while (i < 3)
+	while (i < 10)
 	{
 		line = get_next_line(fd);
 		if (!line)

@@ -6,12 +6,11 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/11 17:53:01 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/15 15:22:51 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 #include <fcntl.h>
 
 static char	*clean_stash(char *stash)
@@ -20,21 +19,22 @@ static char	*clean_stash(char *stash)
 
 	int (i) = 0;
 	int (j) = 0;
-	if (!stash || stash[0] == '\0')
+	if (!stash)
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	i++;
-	new_stash = malloc((sizeof(char)) * (ft_strlen(stash) - i + 1));
+	if (!stash[i])
+		return (free(stash), NULL);
+	new_stash = ft_calloc((ft_strlen(stash) - i + 1), sizeof(char));
 	if (!new_stash)
-		// return (free(stash), NULL);
-		return (NULL);
+		return (free(stash), NULL);
+	i++;
 	while (stash[i] != '\0')
 		new_stash[j++] = stash[i++];
-	new_stash[j] = '\0';
 	free(stash);
 	return (new_stash);
 }
+
 /* Cleans the previous line to only keep
 * the nest line after \n
 */
@@ -44,23 +44,21 @@ static char	*fetch_line(char *stash)
 	char	*line;
 
 	int (i) = 0;
-	int (j) = 0;
-	if (stash[0] == '\0')
+	if (!stash[i] || stash[0] == '\0')
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	i++;
-	line = (char *)malloc(sizeof(char) * (i + 2));
-	//line = calloc(sizeof(char), (i + 2));
+	line = ft_calloc((i + 2), sizeof(char));
 	if (!line)
 		return (NULL);
-	while (stash[j] && stash[j] != '\n')
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
 	{
-		line[j] = stash[j];
-		j++;
+		line[i] = stash[i];
+		i++;
 	}
-	line[j++] = '\n';
-	line[j] = '\0';
+	if (stash[i] != '\0' && stash[i] == '\n')
+		line[i++] = '\n';
 	return (line);
 }
 
@@ -79,22 +77,18 @@ static char	*read_and_join(int fd, char *buffer, char *stash)
 		if (!stash)
 			return (NULL);
 	}
-	while (!ft_strchr(buffer, '\n') && bytes_read > 0)
+	while (bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (free(buffer), free(stash), NULL);
+			return (NULL);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(stash, buffer);
 		if (!temp || temp[0] == '\0')
-		{
 			return (free(temp), NULL);
-		}
-		//free(stash);
 		stash = temp;
-		if (!stash || stash[0] == '\0')
-			return (NULL);
-		//free(temp);
+		if (ft_strchr(buffer, '\n'))
+			break ;
 	}
 	return (stash);
 }
@@ -109,56 +103,50 @@ char	*get_next_line(int fd)
 	char		*buf;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	buf = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
-	//buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buf)
 		return (NULL);
 	stash = read_and_join(fd, buf, stash);
 	free(buf);
 	if (!stash)
-	{
-		//free(stash);
-		//stash = NULL;
 		return (NULL);
-	}
 	line = fetch_line(stash);
 	stash = clean_stash(stash);
-	//free(stash);
 	return (line);
 }
 
 /* Writes BUFFER_SIZE characters of a file text 
- * in the terminal.
+* in the terminal.
  * */
 
-int	main(void)
-{
-	int		fd;
-	char	*line;
+// #include <stdio.h>
 
-	fd = open("../Main/gnlpersona3.txt", O_RDONLY);
-	if (!fd)
-		return (-1);
-	int (i) = 0;
-	while (i < 10)
-	{
-		line = get_next_line(fd);
-		if (!line)
-		{
-			printf("ERROR: the file is empty, please insert text!");
-			break ;
-		}
-		printf("%s", line);
-		free(line);
-		i++;
-	}
-	close(fd);
-	return (0);
-}
-
-/* Testing get_next_line()
- * This test has to write BUFFER_size characters
- * until the end of the file.
- * */
+// int	main(void)
+// {
+// 	int	fd;
+// 	char	*line;
+// 	//fd = open("../Main/gnlpersona3.txt", O_RDONLY);
+// 	fd = open("../Main/gnltestnl.txt", O_RDONLY);
+// 	if (fd == -1)
+// 	{
+// 		printf("ERROR: the file cannot be opened!");
+// 		return (-1);
+// 	}
+// 	int	i = 0;
+// 	while (i < 3)
+// 	{
+// 		line = get_next_line(fd);
+// 		if (!line)
+// 		{
+// 			printf("ERROR: the file is empty, please insert text!");
+// 			break ;
+// 		}
+// 		printf("%s", line);
+// 		free(line);
+// 		i++;
+// 	}
+// 	close(fd);
+// 	return (0);
+// }

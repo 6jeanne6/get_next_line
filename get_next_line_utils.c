@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:54:09 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/11 17:25:58 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/15 15:07:34 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	int (i) = 0;
 	int (j) = 0;
-
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	ptr = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
 	if (!ptr)
-		return (0);
+		return (NULL);
 	while (s1[i] != '\0')
 	{
 		ptr[i] = s1[i];
@@ -62,12 +61,12 @@ char	*ft_strjoin(char *s1, char *s2)
 
 char	*ft_strdup(char *s)
 {
-	int (j) = 0;
-	char *(result) = NULL;
+	char	*result;
 
-	result = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	int (j) = 0;
+	result = ft_calloc((ft_strlen(s) + 1), sizeof(char));
 	if (!result)
-		return (0);
+		return (NULL);
 	while (s[j] != '\0')
 	{
 		result[j] = s[j];
@@ -92,7 +91,7 @@ void	*ft_calloc(int nmemb, int size)
 		return (0);
 	while (i < nmemb * size)
 	{
-		ptr[i] = '\0';
+		ptr[i] = 0;
 		i++;
 	}
 	return (ptr);

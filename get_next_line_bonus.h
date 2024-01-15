@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 15:03:08 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/15 16:22:34 by jewu             ###   ########.fr       */
+/*   Created: 2024/01/15 16:08:31 by jewu              #+#    #+#             */
+/*   Updated: 2024/01/15 16:22:13 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
 
-# define GET_NEXT_LINE_H
+# define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
@@ -30,8 +30,3 @@ char	*ft_strdup(char *s);
 void	*ft_calloc(int nmemb, int size);
 
 #endif
-/*
- * sys/stat.h = manipulation of file metadata (modification date, rights)
- * fcntl.h = manipulate file descriptor
- * both libraries are used for open()
- * */

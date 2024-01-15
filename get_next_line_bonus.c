@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/15 17:38:28 by jewu             ###   ########.fr       */
+/*   Created: 2024/01/15 16:13:10 by jewu              #+#    #+#             */
+/*   Updated: 2024/01/15 17:56:12 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*clean_stash(char *stash)
 {
@@ -98,7 +98,7 @@ static char	*read_and_join(int fd, char *buffer, char *stash)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash[1024];
 	char		*buf;
 	char		*line;
 
@@ -107,44 +107,54 @@ char	*get_next_line(int fd)
 	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buf)
 		return (NULL);
-	stash = read_and_join(fd, buf, stash);
+	stash[fd] = read_and_join(fd, buf, stash[fd]);
 	free(buf);
-	if (!stash)
+	if (!stash[fd])
 		return (NULL);
-	line = fetch_line(stash);
-	stash = clean_stash(stash);
+	line = fetch_line(stash[fd]);
+	stash[fd] = clean_stash(stash[fd]);
 	return (line);
 }
 
-/* Writes BUFFER_SIZE characters of a file text 
-* in the terminal.
- * */
-
 // #include <stdio.h>
 
-// int	main(void)
+// int	main (void)
 // {
-// 	int	fd;
+// 	int		fd1;
+// 	int		fd2;
+// 	int		fd3;
 // 	char	*line;
-// 	fd = open("../Main/gnlpersona3.txt", O_RDONLY);
-// 	if (fd == -1)
+
+// 	fd1 = open("../Main/gnlpersona3.txt", O_RDONLY);
+// 	fd2 = open("../Main/gnltestnl.txt", O_RDONLY);
+// 	fd3 = open("../Main/gnlandromaque.txt", O_RDONLY);
+// 	if (fd1 == -1 || fd2 == -1 || fd3 == -1)
 // 	{
-// 		printf("ERROR: the file cannot be opened!");
+// 		printf("ERROR: one of the file cannot be opened!");
 // 		return (-1);
 // 	}
 // 	int	i = 0;
-// 	while (i < 3)
+// 	while (i < 10)
 // 	{
-// 		line = get_next_line(fd);
+// 		line = get_next_line(fd1);
+// 		printf("line [%d]: %s", i, line);
+// 		free(line);
+// 		line = get_next_line(fd2);
+// 		printf("line [%d]: %s", i, line);
+// 		free(line);
+// 		line = get_next_line(fd3);
 // 		if (!line)
 // 		{
 // 			printf("ERROR: the file is empty, please insert text!");
 // 			break ;
 // 		}
-// 		printf("%s", line);
+// 		printf("line [%d]: %s", i, line);
 // 		free(line);
 // 		i++;
 // 	}
-// 	close(fd);
+// 	close(fd1);
+// 	close(fd2);
+// 	close(fd3);
+
 // 	return (0);
 // }

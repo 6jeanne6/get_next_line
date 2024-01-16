@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/16 16:08:40 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/16 17:42:40 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,24 +127,16 @@ char	*get_next_line(int fd)
 // {
 // 	int	fd;
 // 	char	*line;
-// 	fd = open("../Main/gnlpersona3.txt", O_RDONLY);
+// 	fd = open("../Main/gnltestnl.txt", O_RDONLY);
 // 	if (fd == -1)
 // 	{
 // 		printf("ERROR: the file cannot be opened!");
 // 		return (-1);
 // 	}
-// 	int	i = 0;
-// 	while (i < 3)
+// 	while ((line = get_next_line(fd)) != NULL)
 // 	{
-// 		line = get_next_line(fd);
-// 		if (!line)
-// 		{
-// 			printf("ERROR: the file is empty, please insert text!");
-// 			break ;
-// 		}
 // 		printf("%s", line);
 // 		free(line);
-// 		i++;
 // 	}
 // 	close(fd);
 // 	return (0);

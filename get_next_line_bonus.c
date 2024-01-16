@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:13:10 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/16 16:10:30 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/16 17:55:51 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,30 +135,15 @@ char	*get_next_line(int fd)
 // 		return (-1);
 // 	}
 // 	int	i = 0;
-// 	while (i < 2)
+// 	while (i < 10)
 // 	{
 // 		line = get_next_line(fd1);
-// 		if (!line)
-// 		{
-// 			printf("ERROR: the file is empty, please insert text!");
-// 			break ;
-// 		}
 // 		printf("LINE [%d]: %s", i, line);
 // 		free(line);
 // 		line = get_next_line(fd2);
-// 		if (!line)
-// 		{
-// 			printf("ERROR: the file is empty, please insert text!");
-// 			break ;
-// 		}
 // 		printf("LINE [%d]: %s", i, line);
 // 		free(line);
 // 		line = get_next_line(fd3);
-// 		if (!line)
-// 		{
-// 			printf("ERROR: the file is empty, please insert text!");
-// 			break ;
-// 		}
 // 		printf("LINE [%d]: %s", i, line);
 // 		free(line);
 // 		i++;

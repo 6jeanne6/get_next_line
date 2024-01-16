@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:13:10 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/15 17:56:12 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/16 16:10:30 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*clean_stash(char *stash)
 }
 
 /* Cleans the previous line to only keep
-* the nest line after \n
+* the next line after \n
 */
 
 static char	*fetch_line(char *stash)
@@ -117,6 +117,7 @@ char	*get_next_line(int fd)
 }
 
 // #include <stdio.h>
+// #include <fcntl.h>
 
 // int	main (void)
 // {
@@ -134,13 +135,23 @@ char	*get_next_line(int fd)
 // 		return (-1);
 // 	}
 // 	int	i = 0;
-// 	while (i < 10)
+// 	while (i < 2)
 // 	{
 // 		line = get_next_line(fd1);
-// 		printf("line [%d]: %s", i, line);
+// 		if (!line)
+// 		{
+// 			printf("ERROR: the file is empty, please insert text!");
+// 			break ;
+// 		}
+// 		printf("LINE [%d]: %s", i, line);
 // 		free(line);
 // 		line = get_next_line(fd2);
-// 		printf("line [%d]: %s", i, line);
+// 		if (!line)
+// 		{
+// 			printf("ERROR: the file is empty, please insert text!");
+// 			break ;
+// 		}
+// 		printf("LINE [%d]: %s", i, line);
 // 		free(line);
 // 		line = get_next_line(fd3);
 // 		if (!line)
@@ -148,7 +159,7 @@ char	*get_next_line(int fd)
 // 			printf("ERROR: the file is empty, please insert text!");
 // 			break ;
 // 		}
-// 		printf("line [%d]: %s", i, line);
+// 		printf("LINE [%d]: %s", i, line);
 // 		free(line);
 // 		i++;
 // 	}

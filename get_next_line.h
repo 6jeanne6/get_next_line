@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:03:08 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/15 16:22:34 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/16 16:06:59 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
 
 int		ft_strlen(char *s);
 int		ft_strchr(char *s, char c);

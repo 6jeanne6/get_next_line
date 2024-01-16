@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/15 17:38:28 by jewu             ###   ########.fr       */
+/*   Updated: 2024/01/16 16:08:40 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*clean_stash(char *stash)
 }
 
 /* Cleans the previous line to only keep
-* the nest line after \n
+* the next line after \n
 */
 
 static char	*fetch_line(char *stash)
@@ -121,6 +121,7 @@ char	*get_next_line(int fd)
  * */
 
 // #include <stdio.h>
+// #include <fcntl.h>
 
 // int	main(void)
 // {

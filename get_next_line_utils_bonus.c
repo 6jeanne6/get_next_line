@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:12:56 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/15 17:58:58 by jewu             ###   ########.fr       */
+/*   Updated: 2024/03/28 17:39:49 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	ft_strlen(char *s)
 {
-	int (i) = 0;
+	int	i;
+
+	i = 0;
 	if (!s)
 		return (0);
 	while (s[i] != '\0')
@@ -24,7 +26,9 @@ int	ft_strlen(char *s)
 
 int	ft_strchr(char *s, char c)
 {
-	int (i) = 0;
+	int	i;
+
+	i = 0;
 	if (!s || !c)
 		return (0);
 	while (s[i] != '\0')
@@ -39,9 +43,11 @@ int	ft_strchr(char *s, char c)
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*ptr;
+	int	i;
+	int	j;
 
-	int (i) = 0;
-	int (j) = 0;
+	i = 0;
+	j = 0;
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	ptr = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
@@ -62,8 +68,9 @@ char	*ft_strjoin(char *s1, char *s2)
 char	*ft_strdup(char *s)
 {
 	char	*result;
+	int	j;
 
-	int (j) = 0;
+	j = 0;
 	result = ft_calloc((ft_strlen(s) + 1), sizeof(char));
 	if (!result)
 		return (NULL);

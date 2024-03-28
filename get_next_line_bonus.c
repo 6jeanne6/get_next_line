@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:13:10 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/16 17:55:51 by jewu             ###   ########.fr       */
+/*   Updated: 2024/03/28 17:37:34 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ static char	*clean_stash(char *stash)
 {
 	char	*new_stash;
 
-	int (i) = 0;
-	int (j) = 0;
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
 	if (!stash)
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
@@ -41,8 +44,9 @@ static char	*clean_stash(char *stash)
 static char	*fetch_line(char *stash)
 {
 	char	*line;
+	int	i;
 
-	int (i) = 0;
+	i = 0;
 	if (!stash[i] || stash[0] == '\0')
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
@@ -78,7 +82,7 @@ static char	*read_and_join(int fd, char *buffer, char *stash)
 	}
 	while (bytes_read > 0)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		bytes_read = read(fd, buffer, BUFFER_SIZE); 
 		if (bytes_read == -1)
 			return (NULL);
 		buffer[bytes_read] = '\0';
@@ -101,7 +105,12 @@ char	*get_next_line(int fd)
 	static char	*stash[1024];
 	char		*buf;
 	char		*line;
-
+	
+	if (fd == -42)
+	{
+		free(stash);
+		return (NULL);
+	}
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
@@ -116,41 +125,41 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// #include <stdio.h>
-// #include <fcntl.h>
+/*#include <stdio.h>
+#include <fcntl.h>
 
-// int	main (void)
-// {
-// 	int		fd1;
-// 	int		fd2;
-// 	int		fd3;
-// 	char	*line;
+int	main (void)
+{
+	int		fd1;
+	int		fd2;
+	int		fd3;
+	char	*line;
 
-// 	fd1 = open("../Main/gnlpersona3.txt", O_RDONLY);
-// 	fd2 = open("../Main/gnltestnl.txt", O_RDONLY);
-// 	fd3 = open("../Main/gnlandromaque.txt", O_RDONLY);
-// 	if (fd1 == -1 || fd2 == -1 || fd3 == -1)
-// 	{
-// 		printf("ERROR: one of the file cannot be opened!");
-// 		return (-1);
-// 	}
-// 	int	i = 0;
-// 	while (i < 10)
-// 	{
-// 		line = get_next_line(fd1);
-// 		printf("LINE [%d]: %s", i, line);
-// 		free(line);
-// 		line = get_next_line(fd2);
-// 		printf("LINE [%d]: %s", i, line);
-// 		free(line);
-// 		line = get_next_line(fd3);
-// 		printf("LINE [%d]: %s", i, line);
-// 		free(line);
-// 		i++;
-// 	}
-// 	close(fd1);
-// 	close(fd2);
-// 	close(fd3);
+	fd1 = open("../Main/gnlpersona3.txt", O_RDONLY);
+	fd2 = open("../Main/gnltestnl.txt", O_RDONLY);
+	fd3 = open("../Main/gnlandromaque.txt", O_RDONLY);
+	if (fd1 == -1 || fd2 == -1 || fd3 == -1)
+	{
+		printf("ERROR: one of the file cannot be opened!");
+		return (-1);
+	}
+	int	i = 0;
+	while (i < 10)
+	{
+		line = get_next_line(fd1);
+		printf("LINE [%d]: %s", i, line);
+		free(line);
+		line = get_next_line(fd2);
+		printf("LINE [%d]: %s", i, line);
+		free(line);
+		line = get_next_line(fd3);
+		printf("LINE [%d]: %s", i, line);
+		free(line);
+		i++;
+	}
+	close(fd1);
+	close(fd2);
+	close(fd3);
 
-// 	return (0);
-// }
+	return (0);
+}*/

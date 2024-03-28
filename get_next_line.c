@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
-/*   Updated: 2024/01/16 17:42:40 by jewu             ###   ########.fr       */
+/*   Updated: 2024/03/28 17:38:36 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 static char	*clean_stash(char *stash)
 {
 	char	*new_stash;
+	int	i;
+	int	j;
 
-	int (i) = 0;
-	int (j) = 0;
+	i = 0;
+	j = 0;
 	if (!stash)
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
@@ -41,8 +43,9 @@ static char	*clean_stash(char *stash)
 static char	*fetch_line(char *stash)
 {
 	char	*line;
+	int	i;
 
-	int (i) = 0;
+	i = 0;
 	if (!stash[i] || stash[0] == '\0')
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
@@ -68,8 +71,9 @@ static char	*fetch_line(char *stash)
 static char	*read_and_join(int fd, char *buffer, char *stash)
 {
 	char	*temp;
+	int	bytes_read;
 
-	int (bytes_read) = 1;
+	bytes_read = 1;
 	if (!stash)
 	{
 		stash = ft_strdup("");
@@ -101,7 +105,12 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*buf;
 	char		*line;
-
+	
+	if (fd == -42)
+	{
+		free(stash);
+		return (NULL);
+	}
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
@@ -120,24 +129,24 @@ char	*get_next_line(int fd)
 * in the terminal.
  * */
 
-// #include <stdio.h>
-// #include <fcntl.h>
+/*#include <stdio.h>
+#include <fcntl.h>
 
-// int	main(void)
-// {
-// 	int	fd;
-// 	char	*line;
-// 	fd = open("../Main/gnltestnl.txt", O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		printf("ERROR: the file cannot be opened!");
-// 		return (-1);
-// 	}
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+int	main(void)
+{
+	int	fd;
+	char	*line;
+	fd = open("../Main/gnlpersona3.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("ERROR: the file cannot be opened!");
+		return (-1);
+	}
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+	return (0);
+}*/

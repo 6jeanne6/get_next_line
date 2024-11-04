@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:13:10 by jewu              #+#    #+#             */
-/*   Updated: 2024/03/28 17:37:34 by jewu             ###   ########.fr       */
+/*   Updated: 2024/11/04 17:22:17 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 static char	*clean_stash(char *stash)
 {
 	char	*new_stash;
-
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -44,7 +43,7 @@ static char	*clean_stash(char *stash)
 static char	*fetch_line(char *stash)
 {
 	char	*line;
-	int	i;
+	int		i;
 
 	i = 0;
 	if (!stash[i] || stash[0] == '\0')
@@ -82,9 +81,9 @@ static char	*read_and_join(int fd, char *buffer, char *stash)
 	}
 	while (bytes_read > 0)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE); 
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (NULL);
+			return (free(stash), NULL);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(stash, buffer);
 		if (!temp || temp[0] == '\0')
@@ -105,10 +104,11 @@ char	*get_next_line(int fd)
 	static char	*stash[1024];
 	char		*buf;
 	char		*line;
-	
+
 	if (fd == -42)
 	{
 		free(stash);
+		stash = NULL;
 		return (NULL);
 	}
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)

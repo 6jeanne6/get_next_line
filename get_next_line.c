@@ -6,7 +6,7 @@
 /*   By: jewu <jewu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:53:51 by jewu              #+#    #+#             */
-/*   Updated: 2024/03/28 17:38:36 by jewu             ###   ########.fr       */
+/*   Updated: 2024/11/04 17:21:38 by jewu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static char	*fetch_line(char *stash)
 static char	*read_and_join(int fd, char *buffer, char *stash)
 {
 	char	*temp;
-	int	bytes_read;
+	int		bytes_read;
 
 	bytes_read = 1;
 	if (!stash)
@@ -84,7 +84,7 @@ static char	*read_and_join(int fd, char *buffer, char *stash)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (NULL);
+			return (free(stash), NULL);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(stash, buffer);
 		if (!temp || temp[0] == '\0')
@@ -105,10 +105,11 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*buf;
 	char		*line;
-	
+
 	if (fd == -42)
 	{
 		free(stash);
+		stash = NULL;
 		return (NULL);
 	}
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -128,25 +129,3 @@ char	*get_next_line(int fd)
 /* Writes BUFFER_SIZE characters of a file text 
 * in the terminal.
  * */
-
-/*#include <stdio.h>
-#include <fcntl.h>
-
-int	main(void)
-{
-	int	fd;
-	char	*line;
-	fd = open("../Main/gnlpersona3.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		printf("ERROR: the file cannot be opened!");
-		return (-1);
-	}
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
-}*/
